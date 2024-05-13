@@ -25,7 +25,6 @@ class MatchingEngine:
     def translate_to_df(self, fp : str) -> pd.DataFrame:
         return pd.read_csv(fp)
     
-    
     def create_client_states(self, client_csv : str) -> pd.DataFrame:
         client_states = {}
 
