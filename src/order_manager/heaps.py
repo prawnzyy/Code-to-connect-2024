@@ -49,7 +49,7 @@ class InstrumentOrderBook:
                 self.market_sell *= -1
                 self.market_sell.append(order)
         else:
-            if order.side == 'BUY':g
+            if order.side == 'BUY':
                 self.buy_heap.add_heap(order)
             else:
                 self.sell_heap.add_heap(order)
