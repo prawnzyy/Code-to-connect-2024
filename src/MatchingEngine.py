@@ -67,11 +67,10 @@ class MatchingEngine:
         close_auction_df = df
 
         self.logger("Open Auction")
-        
 
         self.logger("Continuous Trading")
 
-        # REMOVED BECAUSE BUGGY
+        # # REMOVED BECAUSE BUGGY
         # for _, order in continuous_trading_df.iterrows():
         #     self.exchange_manager.parse_order(order)
 
