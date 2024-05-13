@@ -6,7 +6,6 @@ class ReportManager:
     def __init__(self, client_state, instrument_state):
         self.clients = client_state
         self.rejected_order = []
-        self.accepted_orders = []
         self.instruments = instrument_state
     
     def add_rejected_order(self, order_id, rejection_reason):
