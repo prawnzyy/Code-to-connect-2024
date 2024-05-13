@@ -1,6 +1,31 @@
 import csv
 from pathlib import Path
 import os
+import pandas as pd
+
+def filter_lot(x, instruments):
+    instrument = instruments[x['Instrument']]
+    #return instrument.is_valid_lot_size(x[])
+
+def filter_currency(x, clients, instruments):
+    instrument = instruments[x['Instrument']]
+    currency = clients[x['Client']]
+
+    return (instrument['Currency'] in currency.split(","))
+
+def filter_condition(order_path, clients, instruments):
+    order_df = pd.read_csv(order_path)
+
+    #Check 1
+    valid_instruments = set(instruments['InstrumentID'])
+    order_df = order_df[order_df['Instrument'] in valid_instruments]
+
+    #Check 2
+    order_df = order_df.apply(lambda x : filter_currency(x, clients, instruments))
+
+    #Check 3
+    order_df = order_df.apply(lambda x : filter_lot(x, instruments))
+    return order_df
 
 def retrieve_client():
     Client_data = []
