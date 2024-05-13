@@ -17,7 +17,7 @@ class MatchingEngine:
         self.clients = self.create_client_states(client_csv)
         self.instruments = self.create_instrument_states(instr_csv)
         self.report_manager = ReportManager(self.clients, self.instruments)
-        self.filtering_manager = FilteringManager(self.clients, self.instruments)
+        self.filtering_manager = FilteringManager(self.clients, self.instruments, self.report_manager)
         self.order_df = pd.read_csv(order_csv)
         self.filtered_orders = None
         self.logger = logger
