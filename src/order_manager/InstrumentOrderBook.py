@@ -5,8 +5,8 @@ class InstrumentOrderBook:
         self.id = id
         self.buyHeap = buyHeap()
         self.sellHeap = sellHeap()
-        self.market = [] * 10
-        self.reportManager
+        self.market = [[]] * 10
+        self.reportManager = reportManager
 
     def getSellHeap(self):
         return self.sellHeap
@@ -16,4 +16,7 @@ class InstrumentOrderBook:
     
     def getMarket(self):
         return self.market
+    
+    def execute(self):
+
         

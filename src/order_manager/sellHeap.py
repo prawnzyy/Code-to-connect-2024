@@ -1,12 +1,13 @@
-import heapq
+import heapq, TreeNode
 
 class sellHeap:
     
     def __init__(self):
         self.heap = heapq()
 
-    def insert(self, TreeNode):
-        self.heap.heappush(TreeNode)
+    def insert(self, order):
+        node = TreeNode(order)
+        self.heap.heappush(node)
         self.heap.heapify()
     
     def pop(self):
