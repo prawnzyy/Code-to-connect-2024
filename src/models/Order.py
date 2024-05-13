@@ -1,6 +1,6 @@
 class Order:
     """
-        Description: An instance of an order
+    Description: This class represents an order
     """
     def __init__(self, time, orderID, instrument, quantity, client, price, side):
         self.time = time
@@ -31,4 +31,10 @@ class Order:
     
     def getSide(self):
         return self.side
+    
+    def breakdown(self):
+        orders = []
+        for i in range(self.quantity):
+            orders.append(Order(self.time, self.orderID, self.instrument, 1, self.client, self.price, self.side))
+        return orders
 
