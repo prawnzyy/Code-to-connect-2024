@@ -41,6 +41,13 @@ class InstrumentOrderBook:
         self.market_buy = BuyHeap()
         self.market_sell = BuyHeap()
     
+    def parse_order(self, order_):
+        cli = order_[4]
+        rat = self.rm.clients[cli].rating
+        order = OrderNode(order, rat)
+        self.add_order(order)
+        self.execute()
+
     def add_order(self, order):
         if order.price == 'MARKET':
             if order.side == "BUY":
