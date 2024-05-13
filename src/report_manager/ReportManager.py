@@ -113,6 +113,7 @@ class ReportManager:
         reports = {'output_exchange_report': exchange_report,
                    'output_client_report' : client_report,
                    'instrument_report' : instrument_report}
+        
         path = "./outputs/"
         if not os.path.exists(path):
             os.makedirs(path)
