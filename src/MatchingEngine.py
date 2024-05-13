@@ -68,10 +68,11 @@ class MatchingEngine:
 
         self.logger("Open Auction")
 
-
         self.logger("Continuous Trading")
-        for _, order in continuous_trading_df.iterrows():
-            self.exchange_manager.parse_order(order)
+
+        # # REMOVED BECAUSE BUGGY
+        # for _, order in continuous_trading_df.iterrows():
+        #     self.exchange_manager.parse_order(order)
 
         self.logger("Close Auction")
 

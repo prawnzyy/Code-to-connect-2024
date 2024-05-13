@@ -110,8 +110,8 @@ class ReportManager:
         exchange_report = self.generate_exchange_report()
         client_report = self.generate_client_report()
         instrument_report = self.generate_instrument_report()
-        reports = {'output_exchange_report': exchange_report,
-                   'output_client_report' : client_report,
+        reports = {'exchange_report': exchange_report,
+                   'client_report' : client_report,
                    'instrument_report' : instrument_report}
         
         path = "./outputs/"
