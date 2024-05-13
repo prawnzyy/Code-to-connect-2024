@@ -10,6 +10,7 @@ class Instrument:
         self.instrument_name = name
         self.lot_size = lot_size
         self.curr = curr
+        self.name = name
         self.trades = {'price' : [], 'volume' : []}
         self.final_trades = pd.DataFrame(self.trades)
 
@@ -57,6 +58,8 @@ class Instrument:
         
         :return: Low price, high price in that order.
         """
+        if len(self.final_trades['price']) == 0:
+            return None, None
         return min(self.final_trades['price']), max(self.final_trades['price'])
 
     def get_vwap(self):

@@ -5,7 +5,7 @@ from ..models import Client, Instrument, RejectedOrder
 class ReportManager:
     def __init__(self, client_state, instrument_state):
         self.clients = client_state
-        self.rejected_order = []
+        self.rejected_orders = []
         self.instruments = instrument_state
     
     def add_rejected_order(self, order_id, rejection_reason):
@@ -56,8 +56,8 @@ class ReportManager:
         Returns the exchange report.
         """
         return pd.DataFrame({
-            'OrderID' : [x.get_id() for x in self.rejected_order],
-            'RejectionReason' : [x.get_reason() for x in self.rejected_order]
+            'OrderID' : [x.get_id() for x in self.rejected_orders],
+            'RejectionReason' : [x.get_reason() for x in self.rejected_orders]
         })
     
     def generate_client_report(self) -> pd.DataFrame:
@@ -71,9 +71,9 @@ class ReportManager:
                                     'NetPosition' : []})
         
         # Update via concatenating client reports
-        for c_ in self.clients:
+        for c_ in self.clients.values():
             curr_report = c_.get_client_statistics()
-            client_report.concat(curr_report)
+            client_report = pd.concat([client_report, curr_report])
 
         return client_report
     
@@ -93,9 +93,9 @@ class ReportManager:
         })
         
         # Update report
-        for i_ in self.instruments:
+        for i_ in self.instruments.values():
             curr_is = i_.get_instrument_statistics()
-            instrument_report.concat(curr_is)
+            instrument_report = pd.concat([instrument_report, curr_is])
         return instrument_report
     
     def get_consolidated_reports(self, output_dir="../../output"):
