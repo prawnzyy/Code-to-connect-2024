@@ -1,9 +1,20 @@
 import pandas as pd
 
 class Client:
-    def __init__(self, name):
+    def __init__(self, name, position_check : bool, currency : set, rating : int):
         self.name = name
-        self.positions = {}
+        self.position_check = position_check
+        self.accepted_currency = currency
+        self.rating = rating
+
+    def get_rating(self):
+        return self.rating
+
+    def get_position_check(self):
+        return self.position_check
+    
+    def check_valid_currency(self, currency : str):
+        return currency in self.accepted_currency
     
     def update_position(self, instrument_id, position_delta):
         """Description

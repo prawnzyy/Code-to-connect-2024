@@ -3,19 +3,11 @@ import pandas as pd
 from models import Client, Instrument, RejectedOrder
 
 class ReportManager:
-    def __init__(self, client_df, instrument_df):
-        self.clients = {}
+    def __init__(self, client_state, instrument_state):
+        self.clients = client_state
         self.rejected_order = []
-        self.accepted_orders = {}
+        self.accepted_orders = instrument_state
         self.instruments = {}
-
-        curr_clients = set(client_df['ClientID'])
-        for c_ in curr_clients:
-            self.client_positions[c_] = Client(c_)
-        
-        instruments = set(instrument_df['InstrumentID'])
-        for i_ in instruments:
-            self.instrument_stats[i_] = Instrument(i_)
     
     def add_rejected_order(self, order_id, rejection_reason):
         """Description

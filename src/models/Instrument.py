@@ -4,12 +4,26 @@ class Instrument:
     """Description
     This class represents a instrument.
     """
-    def __init__(self, name):
+    def __init__(self, name, lot_size : int, curr : str):
         self.opening = None
         self.closing = None
         self.instrument_name = name
+        self.lot_size = lot_size
+        self.curr = curr
         self.trades = {'price' : [], 'volume' : []}
         self.final_trades = pd.DataFrame(self.trades)
+
+    def get_currency(self):
+        return self.curr
+    
+    def is_correct_curr(self, curr_ : str) -> bool:
+        return curr_ == self.curr
+    
+    def is_valid_lot_size(self, size) -> bool:
+        return size % self.lot_size == 0
+
+    def get_latest_price(self):
+        return self.trades['prices'][-1]
     
     def set_opening(self, price):
         # Def. programming
