@@ -5,18 +5,22 @@ from .models import Client, Instrument
 
 class MatchingEngine:
 
-    def __init__(self, client_csv : str, instr_csv : str):
+    def __init__(self, client_csv : str, instr_csv : str, order_csv : str, logger = print):
         """Description
         Constructor for matching engine
 
         :param client_csv: File path for the csv with clients.
         :param instr_csv: File path for the csv with instruments.
         :param order_csv: File path for the csv with orders.
+        :param logger: Logger
         """
         self.clients = self.create_client_states(client_csv)
         self.instruments = self.create_instrument_states(instr_csv)
         self.report_manager = ReportManager(self.clients, self.instruments)
         self.filtering_manager = FilteringManager(self.clients, self.instruments)
+        self.order_df = pd.read_csv(order_csv)
+        self.filtered_orders = None
+        self.logger = logger
 
     def translate_to_df(self, fp : str) -> pd.DataFrame:
         return pd.read_csv(fp)
@@ -47,6 +51,10 @@ class MatchingEngine:
         instrument_df.apply(create_instruments, axis=1)
         return instrument_states
     
-    def filter_order_df(self, order_df):
-        ret_df = self.filtering_manager.filter(order_df)
-        return ret_df
+    def filter_order_df(self):
+        ret_df = self.filtering_manager.filter(self.order_df)
+        self.filter_orders = ret_df
+
+    def run(self):
+        self.logger("Applying filter to order chunk")
+        self.filter_order_df()

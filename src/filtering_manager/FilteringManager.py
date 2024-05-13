@@ -1,9 +1,16 @@
+import pandas as pd
+
 class FilteringManager:
     def __init__(self, clients, instruments):
         self.clients = clients
         self.instruments = instruments
 
-    def filter(self, order_df_):
+    def filter(self, order_df_ : pd.DataFrame) -> pd.DataFrame:
+        """Description
+        Filters chunk of orders based on conditions given in paper.
+
+        :return: Filtered dataframe
+        """
         order_df = order_df_.copy()
         def filter(x):
             time, id_, instrument_id, quantity, client, _, _ = x
