@@ -71,9 +71,9 @@ class ReportManager:
                                     'NetPosition' : []})
         
         # Update via concatenating client reports
-        for c_ in self.clients:
+        for c_ in self.clients.values():
             curr_report = c_.get_client_statistics()
-            client_report.concat(curr_report)
+            client_report = pd.concat([client_report, curr_report])
 
         return client_report
     
@@ -93,9 +93,9 @@ class ReportManager:
         })
         
         # Update report
-        for i_ in self.instruments:
+        for i_ in self.instruments.values():
             curr_is = i_.get_instrument_statistics()
-            instrument_report.concat(curr_is)
+            instrument_report = pd.concat([instrument_report, curr_is])
         return instrument_report
     
     def get_consolidated_reports(self, output_dir="../../output"):

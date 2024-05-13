@@ -6,6 +6,7 @@ class Client:
         self.position_check = position_check
         self.accepted_currency = currency
         self.rating = rating
+        self.positions = {}
 
     def get_rating(self):
         return self.rating
@@ -39,7 +40,9 @@ class Client:
         """Description
         Returns the client's statistics.
         """
-        reformat_positions = {'ClientID' : [self.name * len(self.positions.keys())],
+        positions_sum = [sum(x) for x in self.positions.values()]
+        c_id = [self.name for _ in range(len(self.positions.keys()))]
+        reformat_positions = {'ClientID' : c_id,
                                 'InstrumentID' : self.positions.keys(), 
-                              'NetPosition' : self.positions.values()}
+                              'NetPosition' : positions_sum}
         return pd.DataFrame(reformat_positions)

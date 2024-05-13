@@ -1,1 +1,1 @@
-from .FilteringManager import FilteringManager
+from .FilteringManager import *
