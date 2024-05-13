@@ -1,5 +1,6 @@
 from ..utils import get_df
 import pandas as pd
+import os
 from ..models import Client, Instrument, RejectedOrder
 
 class ReportManager:
@@ -112,5 +113,9 @@ class ReportManager:
         reports = {'output_exchange_report': exchange_report,
                    'output_client_report' : client_report,
                    'instrument_report' : instrument_report}
+        path = "./outputs/"
+        if not os.path.exists(path):
+            os.makedirs(path)
+
         for k, v in reports.items():
-            v.to_csv("output_{}.csv".format(k))
+            v.to_csv("outputs/output_{}.csv".format(k))
