@@ -44,7 +44,7 @@ class InstrumentOrderBook:
     def parse_order(self, order_):
         cli = order_[4]
         rat = self.rm.clients[cli].rating
-        order = OrderNode(order, rat)
+        order = OrderNode(order_, rat)
         self.add_order(order)
         self.execute()
 
@@ -53,7 +53,6 @@ class InstrumentOrderBook:
             if order.side == "BUY":
                 self.market_buy.append(order)
             else:
-                self.market_sell *= -1
                 self.market_sell.append(order)
         else:
             if order.side == 'BUY':
