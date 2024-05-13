@@ -26,13 +26,43 @@ class BuyHeap:
     def pop_heap(self):
         return heapq.heappop(self.heap)
     
+    def is_empty(self):
+        return len(self.heap) == 0
+    
+    def peek_heap(self):
+        return self.heap[0]
+    
 class InstrumentOrderBook:
-    def __init__(self):
+    def __init__(self, id, rm):
+        self.id = id
         self.buy_heap = BuyHeap()
         self.sell_heap = BuyHeap()
+        self.rm = rm
+        self.market_buy = []
+        self.market_sell = []
     
     def add_order(self, order):
         pass
 
-    def pop_order(self, order):
-        pass
+    def execute(self):
+        """Description
+        Executes and matches both buy and sell heap together.
+        """
+
+        # Clear market orders first
+    
+
+
+        # Match heaps together
+        while not self.buy_heap.is_empty() and not self.sell_heap.is_empty() and self.buy_heap.peek_heap() >= self.sell_heap.peek_heap():
+            best_buy = self.buy_heap.pop_heap()
+            best_sell = self.sell_heap.pop_heap()
+            execution_price = best_buy
+            if best_buy.time > best_sell.time:
+                execution_price = best_sell
+            # Executes
+            self.rm.add_accepted_order(best_buy.cli, self.id, 
+                                       1, execution_price)
+
+
+    
