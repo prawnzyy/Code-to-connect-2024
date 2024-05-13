@@ -1,4 +1,5 @@
-import heapq, TreeNode
+import heapq
+from .TreeNode import TreeNode
 
 class sellHeap:
     
