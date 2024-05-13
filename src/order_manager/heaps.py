@@ -10,12 +10,11 @@ class OrderNode:
         if self.price > other.price:
             return True
         if self.price == other.price:
-            if self.price <= other.price:
-                return
-
-        
+            if self.rating > other.rating:
+                return True
+            if self.rating == other.rating:
+                return self.time < other.time
         return False
-
                 
 class BuyHeap:
     def __init__(self):
@@ -26,3 +25,14 @@ class BuyHeap:
     
     def pop_heap(self):
         return heapq.heappop(self.heap)
+    
+class InstrumentOrderBook:
+    def __init__(self):
+        self.buy_heap = BuyHeap()
+        self.sell_heap = BuyHeap()
+    
+    def add_order(self, order):
+        pass
+
+    def pop_order(self, order):
+        pass
