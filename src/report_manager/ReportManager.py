@@ -3,19 +3,16 @@ import pandas as pd
 from models import Client, Instrument, RejectedOrder
 
 class ReportManager:
-    def __init__(self):
+    def __init__(self, client_df, instrument_df):
         self.clients = {}
         self.rejected_order = []
         self.accepted_orders = {}
         self.instruments = {}
 
-        # Reads csv and adds all client orders into the hashmap
-        client_df = get_df("clients")
         curr_clients = set(client_df['ClientID'])
         for c_ in curr_clients:
             self.client_positions[c_] = Client(c_)
         
-        instrument_df = get_df("instruments")
         instruments = set(instrument_df['InstrumentID'])
         for i_ in instruments:
             self.instrument_stats[i_] = Instrument(i_)
