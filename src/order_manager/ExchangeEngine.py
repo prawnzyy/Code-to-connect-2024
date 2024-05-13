@@ -19,7 +19,13 @@ class ExchangeEngine:
             if not check_4: # Fail check 4 -> return immediately, parse next row!
                 self.reject_order(id_)
                 return
-        
+        new_orders = curr_order.breakdown()
+        if side == 'SELL':
+            for i in new_orders:
+                self.instrument_heaps[instr].add_buy(i)
+        else:
+            for i in new_orders:
+                self.instrument_heaps[instr].add_sell(i)
         # self.instrument_heaps[instr].parse_order(curr_order)
 
     def is_valid_order(self, client, instr, quantity):

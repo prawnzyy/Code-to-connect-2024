@@ -26,6 +26,16 @@ class BuyHeap:
     def pop_heap(self):
         return heapq.heappop(self.heap)
     
+class SellHeap:
+    def __init__(self):
+        self.heap = []
+
+    def add_heap(self, order):
+        heapq.heappush(self.heap, order)
+
+    def pop_head(self):
+        return heapq.heappop(self.heap)
+    
 class InstrumentOrderBook:
     def __init__(self):
         self.buy_heap = BuyHeap()
