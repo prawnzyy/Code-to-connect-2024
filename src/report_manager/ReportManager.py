@@ -1,6 +1,6 @@
-from utils import get_df
+from ..utils import get_df
 import pandas as pd
-from models import Client, Instrument, RejectedOrder
+from ..models import Client, Instrument, RejectedOrder
 
 class ReportManager:
     def __init__(self, client_state, instrument_state):

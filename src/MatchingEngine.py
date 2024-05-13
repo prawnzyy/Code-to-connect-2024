@@ -1,10 +1,11 @@
 import pandas as pd
-from report_manager import ReportManager
-from models import Client, Instrument
+from .report_manager import ReportManager
+from .filtering_manager import FilteringManager
+from .models import Client, Instrument
 
 class MatchingEngine:
 
-    def __init__(self, client_csv : str, instr_csv : str, order_csv : setattr):
+    def __init__(self, client_csv : str, instr_csv : str):
         """Description
         Constructor for matching engine
 
@@ -15,6 +16,7 @@ class MatchingEngine:
         self.clients = self.create_client_states(client_csv)
         self.instruments = self.create_instrument_states(instr_csv)
         self.report_manager = ReportManager(self.clients, self.instruments)
+        self.filtering_manager = FilteringManager(self.clients, self.instruments)
 
     def translate_to_df(self, fp : str) -> pd.DataFrame:
         return pd.read_csv(fp)
@@ -30,7 +32,7 @@ class MatchingEngine:
                 client_states[id_] = Client(id_, position_check, currency_, rating_)
 
         client_df = self.translate_to_df(client_csv)
-        client_df.apply(create_client)
+        client_df.apply(create_client, axis=1)
         return client_states    
 
     def create_instrument_states(self, instr_csv : str) -> pd.DataFrame:
@@ -42,8 +44,9 @@ class MatchingEngine:
             if id_ not in instrument_states:
                 instrument_states[id_] = Instrument(id_, ls_, curr_)
 
-        instrument_df.apply(create_instruments)
-        return instrument_df
-
-    if __name__ == "__main__":
-        print('test')
+        instrument_df.apply(create_instruments, axis=1)
+        return instrument_states
+    
+    def filter_order_df(self, order_df):
+        ret_df = self.filtering_manager.filter(order_df)
+        return ret_df

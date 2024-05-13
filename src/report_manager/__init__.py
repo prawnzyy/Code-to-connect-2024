@@ -1,1 +1,1 @@
-from ReportManager import *
+from .ReportManager import *
