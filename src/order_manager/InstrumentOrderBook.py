@@ -1,4 +1,5 @@
-import buyHeap, sellHeap, report_manager
+from .buyHeap import buyHeap
+from .sellHeap import sellHeap
 
 class InstrumentOrderBook:
     def __init__(self, id, reportManager):
@@ -36,7 +37,7 @@ class InstrumentOrderBook:
 
     def parseOrder(self, order):
         if order.price == 'Market':
-            client = report_manager.clients.get()
+            client = self.reportManager.clients.get()
             if order.side == 'Buy':
                 self.marketBuy[client].append(order)
             else:
@@ -47,4 +48,4 @@ class InstrumentOrderBook:
             else:
                 self.sellHeap.insert(order)
                 
-        
+    #def execute(self, order):
