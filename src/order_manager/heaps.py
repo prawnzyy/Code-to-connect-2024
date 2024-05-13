@@ -47,11 +47,21 @@ class InstrumentOrderBook:
         self.buy_heap = BuyHeap()
         self.sell_heap = BuyHeap()
         self.rm = rm
-        self.market_buy = []
-        self.market_sell = []
+        self.market_buy = BuyHeap()
+        self.market_sell = BuyHeap()
     
     def add_order(self, order):
-        pass
+        if order.price == 'MARKET':
+            if order.side == "BUY":
+                self.market_buy.append(order)
+            else:
+                self.market_sell *= -1
+                self.market_sell.append(order)
+        else:
+            if order.side == 'BUY':g
+                self.buy_heap.add_heap(order)
+            else:
+                self.sell_heap.add_heap(order)
 
     def execute(self):
         """Description
@@ -59,8 +69,23 @@ class InstrumentOrderBook:
         """
 
         # Clear market orders first
-    
-
+        while not self.market_buy.is_empty() and not self.sell_heap.is_empty() and self.market_buy >= self.sell_heap:
+            best_buy = self.market_buy.pop_heap()
+            best_sell = self.sell_heap.pop_heap()
+            execution_price = best_sell
+            self.rm.add_accepted_order(best_buy.cli, self.id, 
+                                       1, execution_price)
+            self.rm.add_accepted_order(best_sell.cli, self.id, 
+                                    -1, execution_price)
+            
+        while not self.market_sell.is_empty() and self.buy_heap.is_empty() and self.market_sell[0] <= self.buy_heap:
+            best_buy = self.buy_heap.pop_heap()
+            best_sell = self.market_sell.pop_heap()
+            execution_price = best_buy
+            self.rm.add_accepted_order(best_sell.cli, self.id, 
+                                       -1, execution_price)
+            self.rm.add_accepted_order(best_buy.cli, self.id, 
+                                    1, execution_price)
 
         # Match heaps together
         while not self.buy_heap.is_empty() and not self.sell_heap.is_empty() and self.buy_heap.peek_heap() >= self.sell_heap.peek_heap():
@@ -72,6 +97,9 @@ class InstrumentOrderBook:
             # Executes
             self.rm.add_accepted_order(best_buy.cli, self.id, 
                                        1, execution_price)
+            self.rm.add_accepted_order(best_sell.cli, self.id, 
+                                       -1, execution_price)
+
 
 
     
