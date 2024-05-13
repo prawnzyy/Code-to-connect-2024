@@ -10,6 +10,10 @@ class sellHeap:
         node = TreeNode(order)
         self.heap.heappush(node)
         self.heap.heapify()
+        return node
+    
+    def get_size(self):
+        return len(self.heap)
     
     def pop(self):
         item = self.heap.heappop()
